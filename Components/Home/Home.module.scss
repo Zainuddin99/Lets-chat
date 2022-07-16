@@ -56,7 +56,7 @@
     }
 
     & .subContainer {
-        & > div:first-child{
+        & > div:first-child {
             margin: auto;
             font-size: 0.9rem;
             padding: 0 10px;
@@ -83,13 +83,20 @@
 .createRoomModal > form {
     display: flex;
     flex-direction: column;
+    padding: 3% 7%;
+    width: 34vw;
+    min-width: 330px;
 
-    & input {
-        width: 400px;
+    & > *{
+        width: 100%;
     }
 
     & > * {
         margin: 10px 0;
+    }
+
+    & button[type=submit]{
+        padding: 10px;
     }
 }
 

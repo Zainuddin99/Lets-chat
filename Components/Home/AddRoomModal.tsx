@@ -1,7 +1,7 @@
 import { ModalImplementationType } from "../../TS Types/utils.types";
 import Modal from "../Modal";
 import classes from './Home.module.scss'
-import { Switch } from "@mui/material";
+import { FormControlLabel, Switch, TextField } from "@mui/material";
 import { NewRoomInputs } from "../../TS Types/home.types";
 import { useInputs } from "../../customHooks/useInputs";
 import { handleError } from "../../utils/handleError";
@@ -34,13 +34,12 @@ function AddRoomModal({ close }: ModalImplementationType) {
         setDisableSubmit(false)
     }
 
-    return <Modal close={close} className={classes.createRoomModal} label="Create new room" animate="pop-down">
+    return <Modal close={close} className={classes.createRoomModal} label="Create new room" animate="fade-down">
         <form onSubmit={handleSubmit}>
-            <input autoComplete="off" type="text" placeholder="Name *" name="name" required value={inputs.name} onChange={handleInputsChange} />
-            <textarea placeholder="description *" name="description" rows={3} required value={inputs.description} onChange={handleInputsChange} />
+            <TextField id="outlined-basic" label="Name" variant="outlined" autoComplete="off" type="text" name="name" required value={inputs.name} onChange={handleInputsChange} />
+            <TextField id="outlined-multiline-static" label="Description" multiline name="description" rows={3} required value={inputs.description} onChange={handleInputsChange} />
             <div className={`flex-fs-c`}>
-                <div className={`${classes.privateCheck}`}>Private room</div>
-                <Switch value={inputs.privateRoom} onChange={handleInputsChange} name="privateRoom" />
+                <FormControlLabel control={<Switch value={inputs.privateRoom} onChange={handleInputsChange} name="privateRoom" />} label="Private room" />
             </div>
             <button type="submit" disabled={disableSubmit}>Add</button>
         </form>
