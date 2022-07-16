@@ -1,4 +1,4 @@
-import { Rooms } from "./redux.types";
+import { Rooms } from "./home.types";
 
 export type Inputs = {
     email: string;
