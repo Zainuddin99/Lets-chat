@@ -1,3 +1,5 @@
+@use "../../styles/basics";
+
 .rooms {
     width: 85%;
     gap: 20px;
@@ -84,10 +86,10 @@
     display: flex;
     flex-direction: column;
     padding: 3% 7%;
-    width: 34vw;
+    width: 35vw;
     min-width: 330px;
 
-    & > *{
+    & > * {
         width: 100%;
     }
 
@@ -95,8 +97,12 @@
         margin: 10px 0;
     }
 
-    & button[type=submit]{
+    & button[type="submit"] {
         padding: 10px;
+    }
+
+    @include basics.media-query(l) {
+        width: 60vw;
     }
 }
 

@@ -4,8 +4,6 @@ import SideContainer from "./SideContainer";
 
 function Login() {
 
-    
-
     return (
         <div className={classes.main}>
             <div className={classes.mainImgContainer}>

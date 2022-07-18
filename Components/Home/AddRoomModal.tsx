@@ -2,12 +2,12 @@ import { ModalImplementationType } from "../../TS Types/utils.types";
 import Modal from "../Modal";
 import classes from './Home.module.scss'
 import { FormControlLabel, Switch, TextField } from "@mui/material";
-import { NewRoomInputs } from "../../TS Types/home.types";
+import { MaxInputsLength, NewRoomInputs } from "../../TS Types/home.types";
 import { useInputs } from "../../customHooks/useInputs";
 import { handleError } from "../../utils/handleError";
-import { addRoom } from "../../Firebase/Database/rooms";
+import { addRoom, inputsLengthCriteria } from "../../Firebase/Database/rooms";
 import { notify } from "../../utils/notify";
-import { SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { fetchRooms } from "./functions";
 
 const initialInputs: NewRoomInputs = {
@@ -17,8 +17,25 @@ const initialInputs: NewRoomInputs = {
 }
 
 function AddRoomModal({ close }: ModalImplementationType) {
-    const [inputs, handleInputsChange] = useInputs(initialInputs)
+    let [inputs, handleInputsChange, setInputs] = useInputs(initialInputs)
     const [disableSubmit, setDisableSubmit] = useState<boolean>(false)
+    const [maxInputsLegth, setMaxInputsLength] = useState<MaxInputsLength>(inputsLengthCriteria)
+
+    //To add extra functionality for existing handle change
+    const handleInputsChangeCopy = handleInputsChange
+    handleInputsChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        if (name === "name" && value.length > inputsLengthCriteria.name || name === "description" && value.length >= inputsLengthCriteria.description) {
+            setInputs({ ...inputs, [name]: value.slice(0, inputsLengthCriteria[name]) })
+            return
+        }
+        handleInputsChangeCopy(e)
+    }
+
+    useEffect(() => {
+        const { name, description } = inputs
+        setMaxInputsLength({ name: inputsLengthCriteria.name - name.length, description: inputsLengthCriteria.description - description.length })
+    }, [inputs])
 
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
@@ -34,10 +51,10 @@ function AddRoomModal({ close }: ModalImplementationType) {
         setDisableSubmit(false)
     }
 
-    return <Modal close={close} className={classes.createRoomModal} label="Create new room" animate="fade-down">
+    return <Modal close={close} className={classes.createRoomModal} label="Create new room">
         <form onSubmit={handleSubmit}>
-            <TextField id="outlined-basic" label="Name" variant="outlined" autoComplete="off" type="text" name="name" required value={inputs.name} onChange={handleInputsChange} />
-            <TextField id="outlined-multiline-static" label="Description" multiline name="description" rows={3} required value={inputs.description} onChange={handleInputsChange} />
+            <TextField id="outlined-basic" label={`Name (${maxInputsLegth.name})`} variant="outlined" autoComplete="off" type="text" name="name" required value={inputs.name} onChange={handleInputsChange} />
+            <TextField id="outlined-multiline-static" label={`Description (${maxInputsLegth.description})`} multiline name="description" rows={3} required value={inputs.description} onChange={handleInputsChange} />
             <div className={`flex-fs-c`}>
                 <FormControlLabel control={<Switch value={inputs.privateRoom} onChange={handleInputsChange} name="privateRoom" />} label="Private room" />
             </div>

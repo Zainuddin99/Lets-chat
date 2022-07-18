@@ -11,14 +11,40 @@ import {
     updateDoc,
     where,
 } from "firebase/firestore";
-import { NewRoomInputs, Rooms } from "../../TS Types/home.types";
+import {
+    MaxInputsLength,
+    NewRoomInputs,
+    Rooms,
+} from "../../TS Types/home.types";
 import { firebaseAuth } from "../auth";
 import { roomDocRef, roomsFBCollection } from "./setup";
+
+export const inputsLengthCriteria: MaxInputsLength = {
+    name: 25,
+    description: 75,
+};
 
 export const addRoom = (data: NewRoomInputs) => {
     return new Promise(async (resolve, reject) => {
         try {
             const { name } = data;
+            for (const key in <any>inputsLengthCriteria) {
+                if (
+                    //@ts-ignore
+                    data[key as keyof typeof data].length >
+                    inputsLengthCriteria[
+                        key as keyof typeof inputsLengthCriteria
+                    ]
+                ) {
+                    reject(
+                        `${key} cannot exceed ${
+                            inputsLengthCriteria[
+                                key as keyof typeof inputsLengthCriteria
+                            ]
+                        } characters`
+                    );
+                }
+            }
             const dataExists = await getDocs(
                 query(roomsFBCollection, where("name", "==", name), limit(1))
             );

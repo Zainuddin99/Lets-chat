@@ -76,6 +76,7 @@
 
     @include basics.media-query(m) {
         padding: 10px;
+        margin: 15px auto;
     }
 }
 

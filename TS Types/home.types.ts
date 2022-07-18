@@ -4,6 +4,11 @@ export type NewRoomInputs = {
     privateRoom: boolean;
 };
 
+export type MaxInputsLength = {
+    name: number;
+    description: number;
+};
+
 export type HomePageProps = {
     rooms: Rooms[];
 };
