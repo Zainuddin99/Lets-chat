@@ -8,6 +8,7 @@ export const useInputs = (initialInputs: object | string): UseInputsReturn => {
         e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
     ) => {
         const { name, value } = e.target;
+        //handle both types differnetly
         if (initialInputs instanceof Object) {
             setInputs((prev: object) => ({
                 ...prev,

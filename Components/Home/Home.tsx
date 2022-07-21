@@ -1,12 +1,6 @@
-import { memo, useEffect } from "react"
-import { fetchRooms } from "./functions"
 import RoomsComp from "./Rooms"
 
 function Home() {
-
-    useEffect(() => {
-        fetchRooms()
-    }, [])
 
     return (
         <div>
@@ -15,4 +9,4 @@ function Home() {
     )
 }
 
-export default memo(Home)
+export default Home

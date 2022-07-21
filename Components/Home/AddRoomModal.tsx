@@ -7,8 +7,7 @@ import { useInputs } from "../../customHooks/useInputs";
 import { handleError } from "../../utils/handleError";
 import { addRoom, inputsLengthCriteria } from "../../Firebase/Database/rooms";
 import { notify } from "../../utils/notify";
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { fetchRooms } from "./functions";
+import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 
 const initialInputs: NewRoomInputs = {
     name: '',
@@ -32,6 +31,7 @@ function AddRoomModal({ close }: ModalImplementationType) {
         handleInputsChangeCopy(e)
     }
 
+    //To change the length in inputs
     useEffect(() => {
         const { name, description } = inputs
         setMaxInputsLength({ name: inputsLengthCriteria.name - name.length, description: inputsLengthCriteria.description - description.length })
@@ -43,7 +43,6 @@ function AddRoomModal({ close }: ModalImplementationType) {
         try {
             await addRoom(inputs)
             notify("success", "Successfylly added room")
-            fetchRooms()
             close()
         } catch (error: any) {
             handleError(error)
@@ -53,7 +52,7 @@ function AddRoomModal({ close }: ModalImplementationType) {
 
     return <Modal close={close} className={classes.createRoomModal} label="Create new room">
         <form onSubmit={handleSubmit}>
-            <TextField id="outlined-basic" label={`Name (${maxInputsLegth.name})`} variant="outlined" autoComplete="off" type="text" name="name" required value={inputs.name} onChange={handleInputsChange} />
+            <TextField autoFocus id="outlined-basic" label={`Name (${maxInputsLegth.name})`} variant="outlined" autoComplete="off" type="text" name="name" required value={inputs.name} onChange={handleInputsChange} />
             <TextField id="outlined-multiline-static" label={`Description (${maxInputsLegth.description})`} multiline name="description" rows={3} required value={inputs.description} onChange={handleInputsChange} />
             <div className={`flex-fs-c`}>
                 <FormControlLabel control={<Switch value={inputs.privateRoom} onChange={handleInputsChange} name="privateRoom" />} label="Private room" />

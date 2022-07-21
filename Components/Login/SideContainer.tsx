@@ -14,8 +14,10 @@ function SideContainer() {
     const [inputs, handleInputsChange, setInputs] = useInputs(initialInputs);
     const [disabledSubmit, setDisabledSubmit] = useState<boolean>(true);
     const [showSignupMessage, setShowSignupMessage] = useState<boolean>(false);
+
     const router = useRouter()
 
+    //To add default inputs when inputs have changed
     const defaultInputs = () => {
         if (!isObjectsEqual(initialInputs, inputs)) {
             setInputs(initialInputs);
@@ -67,6 +69,7 @@ function SideContainer() {
             const { email, password, confirmPassword, firstName, lastName } = inputs;
             if (
                 email && validateEmail(email) && password &&
+                //If the page is signup add addintional check
                 (formType === "signup" ? (password === confirmPassword && firstName && lastName) : true)
             ) {
                 setDisabledSubmit(false);
@@ -75,7 +78,7 @@ function SideContainer() {
             }
         };
         validateForm();
-    }, [inputs]);
+    }, [inputs, formType]);
 
     const toggleFormType = (type: FormType) => {
         setFormType(type);

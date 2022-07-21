@@ -1,6 +1,6 @@
-import { Paper, Tooltip } from "@mui/material"
 import classes from './Home.module.scss'
-import { RiChatPrivateLine, RiChatSmile2Line } from 'react-icons/ri'
+import { MdDateRange } from 'react-icons/md'
+import { RiAdminLine } from 'react-icons/ri'
 import { joinRoom, removeRequest, requestToJoin } from '../../Firebase/Database/rooms'
 import { handleError } from "../../utils/handleError"
 import { notify } from "../../utils/notify"
@@ -9,6 +9,10 @@ import { changeJoinedState, changeRequestState } from "../../Redux/rooms"
 import { dispatch } from "../../Redux/store"
 import Router from "next/router"
 import { Room } from "../../TS Types/home.types"
+import { Box } from "@mui/system"
+import { Tooltip, Typography } from '@mui/material'
+
+const toolTipEnterDelay: number = 500
 
 function EachRoom({ item }: { item: Room }) {
     const { name, description, createdAt, participants, privateRoom, id, alreadyRequested, joined } = item
@@ -18,6 +22,7 @@ function EachRoom({ item }: { item: Room }) {
         setRequesting(true)
         try {
             if (type === "join-request") {
+                //To request joining
                 await requestToJoin(id)
                 notify("success", "Successfully requested")
                 dispatch(changeRequestState({ id }))
@@ -44,43 +49,39 @@ function EachRoom({ item }: { item: Room }) {
     }
 
     return (
-        <Paper className={classes.room}>
+        <Box sx={{ boxShadow: 6 }} className={classes.room}>
             <div className={`flex-sb-c ${classes.header}`}>
-
-                <Tooltip title={privateRoom ? 'Private room' : "Public room"}>
-                    <h4>{privateRoom ? <RiChatPrivateLine style={{ color: "red" }} /> : <RiChatSmile2Line style={{ color: "green" }} />}</h4>
+                <div className={classes.participant}>{participants} Participants</div>
+                <div className={privateRoom ? classes.private : classes.public}>{privateRoom ? 'Private' : 'Public'}</div>
+            </div>
+            <div className={classes.details}>
+                <Tooltip title="Room creation date" enterDelay={toolTipEnterDelay}>
+                    <Typography color="text.secondary" className={classes.createdAt}>
+                        <MdDateRange /> {createdAt}
+                    </Typography>
                 </Tooltip>
-
-                <p>{participants} Participants</p>
+                <Tooltip title="Room admin" enterDelay={toolTipEnterDelay}>
+                    <Typography color="text.secondary" className={classes.admin}>
+                        <RiAdminLine /> Zainuddin
+                    </Typography>
+                </Tooltip>
+                <Typography variant="h5">
+                    {name}
+                </Typography>
+                <Typography className={classes.description} color="text.secondary">
+                    {description}
+                </Typography>
+                <button
+                    disabled={requesting}
+                    onClick={() => joined ? goToMessage() : (privateRoom ? (alreadyRequested ? requestJoinHandler("remove") : requestJoinHandler("join-request")) : requestJoinHandler("join"))}
+                    className={joined ? "primary" : (privateRoom ? (alreadyRequested ? 'danger' : 'blue') : "secondary")}
+                >
+                    {
+                        joined ? 'Message' : (privateRoom ? (alreadyRequested ? 'Requested' : 'Request to join') : 'Join room')
+                    }
+                </button>
             </div>
-            <div className={`${classes.subContainer} grid-c`}>
-                <div className={classes.details}>
-                    <div className={classes.name}>
-                        <span>Name: </span> {name}
-                    </div>
-                    <div>
-                        <span>Created on</span> {createdAt}
-                    </div>
-                    <div>
-                        <span>Admin: </span> Zainuddin
-                    </div>
-                    <div className={classes.description}>
-                        {description}
-                    </div>
-                </div>
-                <div className="grid-c">
-                    <button
-                        disabled={requesting}
-                        onClick={() => joined ? goToMessage() : (privateRoom ? (alreadyRequested ? requestJoinHandler("remove") : requestJoinHandler("join-request")) : requestJoinHandler("join"))}
-                        className={joined ? "primary" : (privateRoom ? (alreadyRequested ? 'danger' : 'blue') : "secondary")}
-                    >
-                        {
-                            joined ? 'Message' : (privateRoom ? (alreadyRequested ? 'Requested' : 'Request to join') : 'Join room')
-                        }
-                    </button>
-                </div>
-            </div>
-        </Paper>
+        </Box>
     )
 }
 

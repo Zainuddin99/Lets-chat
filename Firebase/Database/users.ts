@@ -5,7 +5,6 @@ import { getDocData, userDocRef } from "./setup";
 
 export const fetchUserData = promiseWrapper(async (userId: string) => {
     const response = await getDoc(userDocRef(userId));
-    console.log(userId, response)
     if (response.exists()) {
         return getDocData(response);
     }

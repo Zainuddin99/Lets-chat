@@ -1,4 +1,6 @@
+import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { Message } from "./chat.types";
+import { QueryDocumentSnapshotType } from "./firebase.types";
 import { Rooms } from "./home.types";
 
 //For redux
@@ -8,6 +10,7 @@ export type UserState = {
 
 export type RoomsState = {
     roomsList: Rooms;
+    loading: boolean;
 };
 
 export type ChatStates = {

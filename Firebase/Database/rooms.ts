@@ -2,32 +2,43 @@ import {
     addDoc,
     arrayRemove,
     arrayUnion,
+    endBefore,
     getDoc,
     getDocs,
     limit,
     orderBy,
     query,
     serverTimestamp,
+    startAfter,
     updateDoc,
     where,
 } from "firebase/firestore";
+import { QueryDocumentSnapshotType } from "../../TS Types/firebase.types";
 import {
     MaxInputsLength,
+    MinInputsLengthCriteria,
     NewRoomInputs,
-    Rooms,
 } from "../../TS Types/home.types";
 import { firebaseAuth } from "../auth";
+import { AllRoomsResponse } from "./rooms.types";
 import { roomDocRef, roomsFBCollection } from "./setup";
 
+//Constants
 export const inputsLengthCriteria: MaxInputsLength = {
     name: 25,
-    description: 75,
+    description: 100,
 };
+const minInputsLengthCriteria: MinInputsLengthCriteria = {
+    name: 3,
+    description: 25,
+};
+export const roomsLimit: number = 10;
 
 export const addRoom = (data: NewRoomInputs) => {
     return new Promise(async (resolve, reject) => {
         try {
             const { name } = data;
+            //Check length is max based on criteria
             for (const key in <any>inputsLengthCriteria) {
                 if (
                     //@ts-ignore
@@ -36,7 +47,7 @@ export const addRoom = (data: NewRoomInputs) => {
                         key as keyof typeof inputsLengthCriteria
                     ]
                 ) {
-                    reject(
+                    return reject(
                         `${key} cannot exceed ${
                             inputsLengthCriteria[
                                 key as keyof typeof inputsLengthCriteria
@@ -45,6 +56,25 @@ export const addRoom = (data: NewRoomInputs) => {
                     );
                 }
             }
+            //Check length is atleast min
+            for (const key in <any>minInputsLengthCriteria) {
+                if (
+                    //@ts-ignore
+                    data[key as keyof typeof data].length <
+                    minInputsLengthCriteria[
+                        key as keyof typeof inputsLengthCriteria
+                    ]
+                ) {
+                    return reject(
+                        `${key} must be atleast ${
+                            minInputsLengthCriteria[
+                                key as keyof typeof inputsLengthCriteria
+                            ]
+                        } characters`
+                    );
+                }
+            }
+            //Cehck weather name already exists
             const dataExists = await getDocs(
                 query(roomsFBCollection, where("name", "==", name), limit(1))
             );
@@ -70,38 +100,52 @@ export const addRoom = (data: NewRoomInputs) => {
     });
 };
 
-export const getAllRooms = (): Promise<Rooms> => {
+export const getAllRooms = (
+    lastDocumentSnapData: QueryDocumentSnapshotType | null
+): Promise<AllRoomsResponse> => {
     return new Promise(async (resolve, reject) => {
         try {
             const response = await getDocs(
-                query(roomsFBCollection, orderBy("createdAt"), limit(10))
+                query(
+                    roomsFBCollection,
+                    orderBy("createdAt", "desc"),
+                    limit(roomsLimit),
+                    lastDocumentSnapData
+                        ? startAfter(lastDocumentSnapData)
+                        : endBefore(null)
+                )
             );
-            resolve(
-                response.docs.map((item) => {
-                    const {
-                        participants,
-                        name,
-                        description,
-                        createdAt,
-                        privateRoom,
-                        requests,
-                    } = item.data();
-                    return {
-                        id: item.id,
-                        createdAt: createdAt.toDate().toLocaleDateString(),
-                        participants: participants.length,
-                        name,
-                        description,
-                        privateRoom,
-                        alreadyRequested: requests.includes(
-                            firebaseAuth.currentUser?.uid
-                        ),
-                        joined: participants.includes(
-                            firebaseAuth.currentUser?.uid
-                        ),
-                    };
-                })
-            );
+            const docsLength = response.docs.length;
+            const lastDocumentSnap = response.docs[docsLength - 1];
+            let noMoreRooms = false;
+            if (docsLength < roomsLimit) {
+                noMoreRooms = true;
+            }
+            const rooms = response.docs.map((item) => {
+                const {
+                    participants,
+                    name,
+                    description,
+                    createdAt,
+                    privateRoom,
+                    requests,
+                } = item.data();
+                return {
+                    id: item.id,
+                    createdAt: createdAt.toDate().toLocaleDateString(),
+                    participants: participants.length,
+                    name,
+                    description,
+                    privateRoom,
+                    alreadyRequested: requests.includes(
+                        firebaseAuth.currentUser?.uid
+                    ),
+                    joined: participants.includes(
+                        firebaseAuth.currentUser?.uid
+                    ),
+                };
+            });
+            resolve({ rooms, noMoreRooms, lastDocumentSnap });
         } catch (error) {
             reject(error);
         }

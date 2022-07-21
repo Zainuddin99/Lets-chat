@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material'
+import { Box } from '@mui/material'
 import { limit, onSnapshot, orderBy, query as firebaseQuery } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -6,7 +6,6 @@ import { formatMessageWithUserData } from '../../Firebase/Database/chat'
 import { messagesSubCollectionRef } from '../../Firebase/Database/setup'
 import { addRoomMessages, fetchRoomData, resetChatState } from '../../Redux/chat'
 import { dispatch } from '../../Redux/store'
-import { Message } from '../../TS Types/chat.types'
 import classes from './chat.module.scss'
 import InputContainer from './InputContainer'
 import Messages from './Messages'
@@ -45,7 +44,7 @@ function Chat() {
     }, [])
 
     return (
-        <Box sx={{boxShadow: 2}} className={classes.roomContainer}>
+        <Box sx={{ boxShadow: 2 }} className={classes.roomContainer}>
             <RoomHeader />
             <Messages />
             <InputContainer />

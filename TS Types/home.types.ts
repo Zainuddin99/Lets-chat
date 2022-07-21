@@ -9,6 +9,11 @@ export type MaxInputsLength = {
     description: number;
 };
 
+export type MinInputsLengthCriteria = {
+    name: number;
+    description: number;
+};
+
 export type HomePageProps = {
     rooms: Rooms[];
 };

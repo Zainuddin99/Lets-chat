@@ -8,7 +8,7 @@ export const store = configureStore({
         users: userReducer,
         rooms: roomsReducer,
         chats: chatsReducer,
-    },
+    }
 });
 
 export type RootState = ReturnType<typeof store.getState>;

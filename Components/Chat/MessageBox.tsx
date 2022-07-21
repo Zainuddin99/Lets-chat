@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material"
-import { blue, grey, purple } from "@mui/material/colors"
+import { blue, grey } from "@mui/material/colors"
 import { MessageBoxProps } from "../../TS Types/chat.types"
 import { getNameConstants } from "../../utils/functions"
 import CustomAvatar from "../Reusable/Avatar"
