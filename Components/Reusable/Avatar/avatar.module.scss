@@ -1,0 +1,12 @@
+.box {
+    background-color: red;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 0.9rem;
+    overflow: hidden;
+
+    &.secondary {
+        background-color: rgb(196, 194, 194);
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,40 @@
+@mixin hide-scrollbar {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    & {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}
+
+@mixin trianglePoint($color, $tip-dimension, $right: 5px, $left: 5px) {
+    &::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: -$tip-dimension;
+        @if $right {
+            right: $right;
+        } @else if $left {
+            left: $left;
+        }
+
+        border-left: $tip-dimension solid transparent;
+        border-right: $tip-dimension solid transparent;
+        border-bottom: $tip-dimension solid $color;
+    }
+}
+
+@mixin outlinedBtn($color) {
+    &.outlined {
+        background-color: transparent;
+        border: 1px solid $color;
+        color: $color;
+    }
+}

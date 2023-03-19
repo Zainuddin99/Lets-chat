@@ -1,0 +1,30 @@
+@use "styles/utils";
+
+$backround-color: rgba(
+    $color: #000000,
+    $alpha: 0.7,
+);
+
+.container {
+    position: relative;
+    width: fit-content;
+
+    &:hover .content {
+        display: block;
+    }
+}
+
+.content {
+    position: absolute;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    background-color: $backround-color;
+    color: #fff;
+    right: 0;
+    border-radius: 4px;
+    display: none;
+    max-width: 200px;
+    width: max-content;
+
+    @include utils.trianglePoint($backround-color, 5px);
+}

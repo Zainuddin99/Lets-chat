@@ -1,0 +1,28 @@
+@use "./utils";
+
+@mixin media-query($breakpoint) {
+    @if $breakpoint == l {
+        @media only screen and (max-width: 960px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint == m {
+        @media only screen and (max-width: 680px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint == s {
+        @media only screen and (max-width: 481px) {
+            @content;
+        }
+    }
+}
+
+@mixin custom-media-query($breakpoint-value) {
+    //To add manual breakpoint
+    @media only screen and (max-width: $breakpoint-value) {
+        @content;
+    }
+}

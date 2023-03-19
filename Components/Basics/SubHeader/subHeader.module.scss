@@ -1,0 +1,12 @@
+.container {
+    background-color: rgba(var(--primary-rgb), 0.04);
+    height: 7vh;
+    display: grid;
+    align-items: center;
+}
+
+.subContainer {
+    text-transform: capitalize;
+    margin: auto;
+    gap: 3px;
+}

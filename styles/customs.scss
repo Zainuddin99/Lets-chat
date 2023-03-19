@@ -1,0 +1,77 @@
+/* Flex default styles with pattern --displaytype-justifycontent-alignItems-flexDirection-- */
+@mixin display-system(
+    $display,
+    $just-cont: flex-start,
+    $align-items: center,
+    $flex-dir: row
+) {
+    display: $display;
+    justify-content: $just-cont;
+    align-items: $align-items;
+    flex-direction: $flex-dir;
+}
+.flex {
+    display: flex;
+}
+.flex-c-c {
+    @include display-system(flex, center);
+}
+.flex-fs-c {
+    @include display-system(flex);
+}
+.flex-fe-c {
+    @include display-system(flex, flex-end);
+}
+.flex-se-c {
+    @include display-system(flex, space-evenly);
+}
+.flex-sb-c {
+    @include display-system(flex, space-between);
+}
+.flexcol-sb-fs {
+    @include display-system(flex, space-between, flex-start, column);
+}
+.flexcol-sa-c {
+    @include display-system(flex, space-around, center, column);
+}
+.flexcol-c-c {
+    @include display-system(flex, center, center, column);
+}
+.flexcol-c-u-c {
+    @include display-system(flex, center, unset, column);
+}
+.grid-c {
+    display: grid;
+    place-items: center;
+}
+
+// Keyframe animations
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+@keyframes pop-down {
+    from {
+        top: 10%;
+    }
+
+    to {
+        top: 50%;
+    }
+}
+@keyframes fade-down {
+    from {
+        top: 45%;
+        opacity: 0;
+    }
+
+    to {
+        top: 50%;
+        opacity: 1;
+    }
+}

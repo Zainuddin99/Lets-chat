@@ -1,0 +1,184 @@
+@use "styles/basics";
+
+.main {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    align-items: center;
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+
+    @include basics.media-query(l) {
+        grid-template-columns: 100%;
+    }
+}
+
+.mainImgContainer {
+    height: 100vh;
+    //Important for Next Image since Image can come out of this
+    position: relative;
+    // animation: imageSlide 0.6s ease-out;
+
+    @include basics.media-query(l) {
+        height: 600px;
+    }
+
+    @include basics.media-query(m) {
+        height: 400px;
+    }
+}
+
+@keyframes imageSlide {
+    from {
+        transform: translate(-100%);
+    }
+
+    to {
+        transform: translate(0);
+    }
+}
+
+.sideContainer {
+    position: relative;
+}
+
+.sideContainer.login {
+    -webkit-animation: rotateLogin 1s ease-out;
+    animation: rotateLogin 1s ease-out;
+}
+
+.sideContainer.signup {
+    -webkit-animation: rotateSignup 1s ease-out;
+    animation: rotateSignup 1s ease-out;
+}
+
+@keyframes rotateLogin {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes rotateSignup {
+    to {
+        opacity: 1;
+    }
+
+    from {
+        opacity: 0;
+    }
+}
+
+.container,
+.signUpContainer {
+    max-width: 350px;
+    margin: auto;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: rgb(0 0 0 / 25%) 0px 2px 2px -3px,
+        rgb(0 0 0 / 17%) 0px 5px 7px 1px, rgb(0 0 0 / 10%) 0px 2px 5px 2px;
+
+    @include basics.media-query(l) {
+        margin: 30px auto;
+    }
+}
+
+.container > .heading {
+    text-align: center;
+    font-size: 2.3rem;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    margin: 4% 0;
+
+    @include basics.media-query(m) {
+        margin: 2% 0;
+        font-size: 1.8rem;
+    }
+}
+
+.sideContainer.forgotPassword .heading {
+    font-size: 1.3rem;
+    text-align: left;
+}
+
+.container > form {
+    width: 98%;
+    margin: auto;
+}
+
+.container > form > * {
+    margin: 10px 0;
+}
+
+.container > form input {
+    width: 100%;
+}
+
+.container > form > button {
+    font-weight: 600;
+    letter-spacing: 0.13rem;
+}
+
+.forgotPasswordLink {
+    text-align: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: rgb(186, 14, 14);
+}
+
+.forgotPasswordLink:hover {
+    text-decoration: underline;
+}
+
+.signUpContainer {
+    margin: 30px auto;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 350;
+    border: 2px solid lightgrey;
+}
+
+.signUpContainer > span {
+    font-weight: 550;
+    color: blue;
+}
+
+.signUpContainer > span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.signupMessage {
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgb(5, 101, 5);
+    font-weight: 500;
+    padding: 15px 7px;
+    margin-bottom: 20px;
+    border: 1px solid var(--primary);
+}
+
+.validationError {
+    color: red;
+    margin-top: 3px;
+    padding: 0;
+    font-size: 0.6rem;
+    animation: fade-side 0.3s ease-in-out;
+}
+
+@keyframes fade-side {
+    from {
+        transform: translate(0, -10px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0);
+        opacity: 1;
+    }
+}

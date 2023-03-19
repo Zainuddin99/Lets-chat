@@ -1,0 +1,44 @@
+.container {
+    display: grid;
+    grid-template-columns: auto calc(100% - 150px);
+    margin-top: 100px;
+    justify-content: space-between;
+}
+
+.profilePhoto {
+    position: relative;
+    transition: 0.3s ease;
+    border-radius: 50%;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    & > .imageSelect {
+        position: absolute;
+        right: 4px;
+        bottom: 0;
+        color: #fff;
+        cursor: pointer;
+    }
+}
+
+.uploadIcon {
+    animation: scale 1.3s ease-in infinite;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.form > div {
+    margin-bottom: 10px;
+}
