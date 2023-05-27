@@ -205,7 +205,12 @@ function SideContainer({ type }: LoginProps) {
                         </>
                     )}
 
-                    <button disabled={disabledSubmit}>Submit</button>
+                    <button
+                        className="primary full"
+                        disabled={disabledSubmit}
+                    >
+                        Submit
+                    </button>
 
                     {type === "login" && (
                         <div className={classes.forgotPasswordLink}>

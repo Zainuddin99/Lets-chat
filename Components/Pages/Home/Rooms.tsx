@@ -85,7 +85,7 @@ function Rooms() {
             <div
                 ref={mainDiv}
                 className={combineClasses(
-                    "flex-se-c fluid shadow-basic",
+                    "flexcol full shadow-basic",
                     classes.rooms
                 )}
             >

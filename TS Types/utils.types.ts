@@ -8,6 +8,8 @@ import {
     TextareaHTMLAttributes,
 } from "react";
 
+export type ThemeTypes = "primary" | "secondary" | "danger";
+
 // Modal
 export type ModalProps = {
     children: ReactNode;

@@ -16,6 +16,7 @@ function RoundedPulseBtn({
                 classes.btn,
                 "flex-c-c",
                 "shadow",
+                "small",
                 className || ""
             )}
             style={style}

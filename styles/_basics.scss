@@ -2,7 +2,7 @@
 
 @mixin media-query($breakpoint) {
     @if $breakpoint == l {
-        @media only screen and (max-width: 960px) {
+        @media only screen and (max-width: 1128px) {
             @content;
         }
     }

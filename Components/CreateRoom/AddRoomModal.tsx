@@ -107,6 +107,7 @@ function AddRoomModal({ close }: { close: () => void }) {
                     <button
                         type="submit"
                         disabled={disableSubmit}
+                        className="secondary"
                     >
                         Create Room
                     </button>

@@ -1,5 +1,6 @@
 @use "./basics";
-@use "./utils";
+
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600&display=swap");
 
 @function hexToRGB($hex) {
     @return red($hex), green($hex), blue($hex);
@@ -7,46 +8,70 @@
 
 // Colors
 $prime-green: #1bb67d;
-$gold: #ce8807;
+$gold: #fda212;
 $danger: #fc0000;
-$white: #fff;
+$white: #ffff;
+$white50: #fafafa;
 $black: #000;
-$grey: #808080;
+$darkgrey: #4b4a4a;
+$skyblue: #090d21;
+$lightgrey: #d3d3d3;
 
 :root {
     // Theme colors
     --primary: #{$prime-green};
     --primary-rgb: #{hexToRGB($prime-green)};
 
-    --secondary: var(--gold);
+    --secondary: #{$gold};
     --secondary-rgb: #{hexToRGB($gold)};
 
     --danger: #{$danger};
     --danger-rgb: #{hexToRGB($danger)};
 
     // Others
-    --bg: #{$white};
+    --bg: #{$white50};
     --primary-text: #{$black};
-    --secondary-text: #{$grey};
-    --dark-text: #{$white};
+    --secondary-text: #{$darkgrey};
+    --white: #{$white};
+    --lightgrey: #{$lightgrey};
+    --card-bg: #{$white};
 
-    // dimensions
     --header-height: 12vh;
     --subheader-height: 7vh;
+
+    --border-radius-sm: 5px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 11px;
+
+    --font-normal: 400;
+    --font-semibold: 500;
+    --font-bold: 600;
+
+    --button-sx: 6.5rem;
+    --button-small: 9.5rem;
+    --button-medium: 12.5rem;
+    --button-large: 15.5rem;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 120%;
 }
 
 html,
 body {
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-family: "Josefin Sans";
     color: var(--primary-text);
     background-color: var(--bg);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 header {
@@ -57,127 +82,22 @@ header {
 .full {
     height: 100%;
     width: 100%;
-}
-
-.secondary-txt {
-    color: var(--secondary-text);
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: 400;
-
-    &.semibold {
-        font-weight: 500;
-    }
-    &.bold {
-        font-weight: 600;
-    }
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .fluid {
-    width: 60%;
-    max-width: 80rem;
+    max-width: 60rem;
     margin: auto;
+    width: 100%;
+    padding: 0 3rem;
+
+    @include basics.media-query(m) {
+        padding: 0 2rem;
+    }
 
     @include basics.media-query(s) {
-        width: 100%;
-        padding: 0 1rem;
-    }
-}
-
-.shadow {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-.shadow-basic {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-}
-.shadow-high {
-    box-shadow: 0 10px 25px #00000080;
-}
-.paper {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
-        rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
-}
-
-.outlined {
-    outline: 1px solid rgb(235, 235, 235);
-}
-
-button {
-    border: none;
-    padding: 7px;
-    background-color: var(--primary);
-    color: #ffffff;
-    transition: 0.3s ease;
-    border-radius: 3px;
-    @include utils.outlinedBtn(var(--primary));
-
-    &.secondary {
-        background-color: var(--secondary);
-        @include utils.outlinedBtn(var(--secondary));
-    }
-
-    &.danger {
-        background-color: var(--danger);
-        @include utils.outlinedBtn(var(--danger));
-    }
-
-    &:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
-
-        &:hover {
-            opacity: 0.65;
-            cursor: not-allowed;
-        }
-    }
-
-    &:hover {
-        opacity: 0.8;
-        cursor: pointer;
-    }
-
-    &:active {
-        opacity: 0.96;
-    }
-}
-
-input,
-textarea,
-input.primary,
-textarea.primary {
-    border: none;
-    padding: 13px;
-    border-radius: 3px;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 0px 0px 1.3px;
-    width: 100%;
-
-    &:focus {
-        outline: none;
-    }
-}
-
-input.secondary,
-textarea.secondary {
-    border: 0.2px solid rgb(184, 183, 183);
-    background-color: rgb(246, 246, 246);
-    border-radius: 2px;
-    padding: 7px 10px;
-    font-size: 0.75rem;
-
-    &:focus {
-        outline: none;
-        border: 1px solid rgb(132, 132, 132);
+        padding: 4px;
     }
 }
 

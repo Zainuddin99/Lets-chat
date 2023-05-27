@@ -11,6 +11,7 @@
         border-radius: 10px;
         text-transform: capitalize;
         font-size: 0.9rem;
+        padding-block: 10px;
     }
 
     @include basics.media-query(m) {
@@ -33,7 +34,7 @@
 }
 
 .createRoomModal {
-    bottom: 85px;
+    bottom: 100px;
     right: 14px;
     z-index: 2;
 
@@ -57,7 +58,6 @@
     }
 
     & button[type="submit"] {
-        padding: 10px;
         font-size: 0.9rem;
     }
 

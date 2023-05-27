@@ -37,7 +37,10 @@ function InputContainer() {
                     onChange={handleChange}
                     placeholder="Enter your message here..."
                 />
-                <button type="submit">
+                <button
+                    type="submit"
+                    className="full"
+                >
                     <IoMdSend />
                 </button>
             </form>

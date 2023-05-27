@@ -17,6 +17,7 @@ import MainLayout from "../Components/Layout/MainLayout";
 
 import "../styles/globals.scss";
 import "../styles/customs.scss";
+import "../styles/themes.scss";
 
 export type NextPageWithLayout = NextPage & {
     // eslint-disable-next-line

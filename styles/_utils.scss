@@ -37,4 +37,24 @@
         border: 1px solid $color;
         color: $color;
     }
+
+    &:hover {
+        background-color: $color;
+        color: var(--white);
+    }
+}
+
+@mixin custom-scrollbar($color: lightgrey, $width: 11px, $radius: 20px) {
+    /* For scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: $color;
+
+    &::-webkit-scrollbar {
+        width: $width;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $color;
+        border-radius: $radius;
+    }
 }

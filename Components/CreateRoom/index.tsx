@@ -13,15 +13,12 @@ function CreateRoom() {
             {isModalOpen && <AddRoomModal close={closeModal} />}
             <div className={classes.createRoom}>
                 <RoundedPulseBtn
-                    content={
-                        <>
-                            <IoMdAdd size={30} />
-                            New Room
-                        </>
-                    }
                     className={classes.createBtn}
                     onClick={isModalOpen ? closeModal : openModal}
-                />
+                >
+                    <IoMdAdd size={30} />
+                    New Room
+                </RoundedPulseBtn>
             </div>
         </>
     );

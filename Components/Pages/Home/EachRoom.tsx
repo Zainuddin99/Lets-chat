@@ -1,5 +1,9 @@
-import { MdDateRange } from "react-icons/md";
-import { RiAdminLine } from "react-icons/ri";
+import {
+    MdOutlineDateRange,
+    MdOutlineInfo,
+    MdOutlinePeopleAlt,
+} from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
 import Router from "next/router";
 
@@ -15,9 +19,7 @@ import { dispatch } from "../../../Redux/store";
 import { Room } from "../../../TS Types/home.types";
 import { roomsActions } from "../../../Redux/rooms";
 import combineClasses from "../../../utils/combineClasses";
-import Tooltip from "../../Reusable/Tooltip";
-
-const toolTipEnterDelay: number = 500;
+import HoveriiButton from "../../Reusable/Buttons/HoverriButton";
 
 function EachRoom({ item }: { item: Room }) {
     const {
@@ -32,6 +34,29 @@ function EachRoom({ item }: { item: Room }) {
         adminData,
     } = item;
     const [requesting, setRequesting] = useState<boolean>(false);
+
+    const details = [
+        {
+            title: "Room type",
+            value: privateRoom ? "Private" : "Public",
+            type: privateRoom ? "danger" : "primary",
+        },
+        {
+            title: "Particapnts",
+            value: participants,
+            icon: MdOutlinePeopleAlt,
+        },
+        {
+            title: "Admin",
+            value: adminData.firstName,
+            icon: CgProfile,
+        },
+        {
+            title: "Created on",
+            value: new Date(createdAt).toDateString(),
+            icon: MdOutlineDateRange,
+        },
+    ];
 
     const requestJoinHandler = async (
         type: "join" | "remove" | "join-request"
@@ -66,50 +91,28 @@ function EachRoom({ item }: { item: Room }) {
     };
 
     return (
-        <div className={combineClasses(classes.room, "shadow-basic")}>
-            <div className={`flex-sb-c ${classes.header}`}>
-                <div className={classes.participant}>
-                    {participants} Participants
+        <div className={combineClasses(classes.room, "card round-lg paper")}>
+            <div className={combineClasses(classes.main, "flex-sb-fs")}>
+                <div className={combineClasses(classes.content, "flexcol")}>
+                    <h3 className={combineClasses("semibold")}>{name}</h3>
+                    <h4>{description}</h4>
                 </div>
-                <div className={privateRoom ? classes.private : classes.public}>
-                    {privateRoom ? "Private" : "Public"}
-                </div>
+
+                {alreadyRequested && (
+                    <div
+                        className={combineClasses(
+                            classes.requested,
+                            "round-sm",
+                            "icon-wrapper"
+                        )}
+                    >
+                        <MdOutlineInfo /> Requested
+                    </div>
+                )}
             </div>
-            <div className={combineClasses(classes.details, "flexcol-sb-fs")}>
-                <div>
-                    <Tooltip
-                        title="Room creation date"
-                        enterDelay={toolTipEnterDelay}
-                    >
-                        <p
-                            className={combineClasses(
-                                classes.createdAt,
-                                "secondary-txt"
-                            )}
-                        >
-                            <MdDateRange /> {createdAt}
-                        </p>
-                    </Tooltip>
-                    <Tooltip
-                        title="Room admin"
-                        enterDelay={toolTipEnterDelay}
-                    >
-                        <p
-                            className={combineClasses(
-                                classes.admin,
-                                "secondary-txt"
-                            )}
-                        >
-                            <RiAdminLine />{" "}
-                            {adminData
-                                ? `${adminData.firstName} ${adminData.lastName}`
-                                : "Unknown"}
-                        </p>
-                    </Tooltip>
-                    <h5>{name}</h5>
-                    <p className={classes.description}>{description}</p>
-                </div>
-                <button
+
+            <div className={combineClasses(classes.footer, "flexcol-fs-fs")}>
+                <HoveriiButton
                     disabled={requesting}
                     onClick={() =>
                         joined
@@ -120,24 +123,57 @@ function EachRoom({ item }: { item: Room }) {
                                 : requestJoinHandler("join-request")
                             : requestJoinHandler("join")
                     }
-                    className={`${
+                    type={
                         joined
                             ? "primary"
                             : privateRoom
-                            ? alreadyRequested
-                                ? "danger"
-                                : "blue"
+                            ? "danger"
                             : "secondary"
-                    } ${classes.btn}`}
+                    }
                 >
                     {joined
                         ? "Message"
                         : privateRoom
                         ? alreadyRequested
-                            ? "Requested"
-                            : "Request to join"
+                            ? "Cancel Request"
+                            : "Request"
                         : "Join room"}
-                </button>
+                </HoveriiButton>
+
+                <div
+                    className={combineClasses(
+                        "flex secondary-text wrap",
+                        classes.details
+                    )}
+                >
+                    {details.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
+                            <div
+                                key={item.title}
+                                className={combineClasses(
+                                    "outlined round-lg relative",
+                                    classes.detail,
+                                    item.type && classes[item.type]
+                                )}
+                            >
+                                <div
+                                    className={combineClasses(
+                                        "icon-wrapper",
+                                        classes.content
+                                    )}
+                                >
+                                    {Icon && <Icon />}
+                                    {item.value}
+                                </div>
+                                <div className={classes.title}>
+                                    {item.title}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

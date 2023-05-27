@@ -1,0 +1,71 @@
+@mixin generateColors($color) {
+    &::before {
+        background: rgba($color, 0.5);
+    }
+    &:hover {
+        &:before {
+            background: rgba($color, 1);
+        }
+    }
+}
+
+.cta {
+    @include generateColors(var(--primary-rgb));
+    &.btn-secondary {
+        @include generateColors(var(--secondary-rgb));
+    }
+    &.btn-danger {
+        @include generateColors(var(--danger-rgb));
+    }
+
+    background-color: transparent;
+    position: relative;
+    padding: 16px 17px;
+    transition: all 0.2s ease;
+    width: fit-content;
+    max-width: max-content;
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border-radius: 28px;
+        width: 46px;
+        height: 46px;
+        transition: all 0.3s ease;
+    }
+    span {
+        position: relative;
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+    }
+    svg {
+        position: relative;
+        top: 0;
+        margin-left: 10px;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke: var(--primary-text);
+        stroke-width: 2;
+        transform: translateX(-5px);
+        transition: all 0.3s ease;
+    }
+    &:hover {
+        $color: var(--white);
+
+        color: $color;
+        &:before {
+            width: 100%;
+        }
+        svg {
+            transform: translateX(0);
+            stroke: $color;
+        }
+    }
+    &:active {
+        transform: scale(0.96);
+    }
+}

@@ -1,3 +1,5 @@
+@use "styles/basics.scss";
+
 /* Flex default styles with pattern --displaytype-justifycontent-alignItems-flexDirection-- */
 @mixin display-system(
     $display,
@@ -10,8 +12,13 @@
     align-items: $align-items;
     flex-direction: $flex-dir;
 }
+
 .flex {
     display: flex;
+}
+.flexcol {
+    display: flex;
+    flex-direction: column;
 }
 .flex-c-c {
     @include display-system(flex, center);
@@ -28,6 +35,12 @@
 .flex-sb-c {
     @include display-system(flex, space-between);
 }
+.flex-sb-fs {
+    @include display-system(flex, space-between, flex-start);
+}
+.flexcol-fs-fs {
+    @include display-system(flex, flex-start, flex-start, column);
+}
 .flexcol-sb-fs {
     @include display-system(flex, space-between, flex-start, column);
 }
@@ -37,12 +50,19 @@
 .flexcol-c-c {
     @include display-system(flex, center, center, column);
 }
-.flexcol-c-u-c {
+.flexcol-c-u {
     @include display-system(flex, center, unset, column);
 }
 .grid-c {
     display: grid;
     place-items: center;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+
+.gap {
+    gap: 1rem;
 }
 
 // Keyframe animations
@@ -74,4 +94,47 @@
         top: 50%;
         opacity: 1;
     }
+}
+
+.icon-wrapper {
+    @include display-system(flex, center, flex-start);
+    gap: 5px;
+}
+
+.card {
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+
+    @include basics.media-query(s) {
+        padding: 0.9rem 0.85rem;
+    }
+}
+
+.round,
+.round-sm {
+    border-radius: var(--border-radius-sm);
+}
+.round-md {
+    border-radius: var(--border-radius-md);
+}
+.round-lg {
+    border-radius: var(--border-radius-lg);
+}
+
+.shadow {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+.shadow-basic {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+.shadow-high {
+    box-shadow: 0 10px 25px #00000080;
+}
+.paper {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
+        rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+}
+
+.outlined {
+    outline: 1px solid rgb(235, 235, 235);
 }

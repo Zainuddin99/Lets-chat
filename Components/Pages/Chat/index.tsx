@@ -75,16 +75,17 @@ function Chat() {
     return (
         <>
             <SubHeader />
-            <div
-                className={combineClasses(
-                    "fluid",
-                    classes.roomContainer,
-                    "shadow-basic"
-                )}
-            >
-                <RoomHeader />
-                <Messages />
-                <InputContainer />
+            <div className="fluid">
+                <div
+                    className={combineClasses(
+                        classes.roomContainer,
+                        "shadow-basic"
+                    )}
+                >
+                    <RoomHeader />
+                    <Messages />
+                    <InputContainer />
+                </div>
             </div>
         </>
     );
