@@ -21,7 +21,7 @@ function SubHeader({ title, breadcrunbLinks, breadcrumbType }: SubHeaderProps) {
                     "flex-sb-c"
                 )}
             >
-                <h2>{title}</h2>
+                <h3 className="semibold">{title}</h3>
                 <Breadcrumbs
                     type={breadcrumbType}
                     links={breadcrunbLinks}

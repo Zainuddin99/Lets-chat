@@ -91,7 +91,12 @@ function EachRoom({ item }: { item: Room }) {
     };
 
     return (
-        <div className={combineClasses(classes.room, "card round-lg paper")}>
+        <div
+            className={combineClasses(
+                classes.room,
+                "card round-lg shadow-light"
+            )}
+        >
             <div className={combineClasses(classes.main, "flex-sb-fs")}>
                 <div className={combineClasses(classes.content, "flexcol")}>
                     <h3 className={combineClasses("semibold")}>{name}</h3>

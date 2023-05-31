@@ -1,17 +1,10 @@
-import Image from "next/image";
-
 import ProfileAvatarAndMenus from "./ProfileAvatarAndMenus";
 
 function Header() {
     return (
-        <header>
+        <header className="shadow-light">
             <div className="flex-sb-c fluid full">
-                <Image
-                    src={"/main2.png"}
-                    width="100"
-                    alt="lets-chat"
-                    height="90"
-                />
+                <h1 className="semibold">Lets chat</h1>
                 <ProfileAvatarAndMenus />
             </div>
         </header>

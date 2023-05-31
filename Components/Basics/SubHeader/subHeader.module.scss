@@ -1,11 +1,8 @@
 .container {
-    background-color: rgba(var(--primary-rgb), 0.04);
-    height: 7vh;
-    display: grid;
-    align-items: center;
+    height: var(--subheader-height);
 }
 
 .subContainer {
     text-transform: capitalize;
-    gap: 3px;
+    height: 100%;
 }

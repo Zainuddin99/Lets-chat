@@ -37,7 +37,7 @@ $lightgrey: #d3d3d3;
     --card-bg: #{$white};
 
     --header-height: 12vh;
-    --subheader-height: 7vh;
+    --subheader-height: 10vh;
 
     --border-radius-sm: 5px;
     --border-radius-md: 8px;
@@ -75,8 +75,8 @@ a {
 }
 
 header {
-    background-color: var(--primary);
     height: var(--header-height);
+    background-color: rgba(var(--primary-rgb), 0.04);
 }
 
 .full {

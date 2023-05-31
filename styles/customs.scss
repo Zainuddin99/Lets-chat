@@ -35,8 +35,14 @@
 .flex-sb-c {
     @include display-system(flex, space-between);
 }
+.flex-sa-c {
+    @include display-system(flex, space-around);
+}
 .flex-sb-fs {
     @include display-system(flex, space-between, flex-start);
+}
+.flex-sb-fe {
+    @include display-system(flex, space-between, flex-end);
 }
 .flexcol-fs-fs {
     @include display-system(flex, flex-start, flex-start, column);
@@ -123,6 +129,9 @@
 
 .shadow {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+.shadow-light {
+    box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3);
 }
 .shadow-basic {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);

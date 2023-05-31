@@ -84,10 +84,7 @@ function Rooms() {
         <>
             <div
                 ref={mainDiv}
-                className={combineClasses(
-                    "flexcol full shadow-basic",
-                    classes.rooms
-                )}
+                className={combineClasses("flexcol full paper", classes.rooms)}
             >
                 {roomsList.map((item: Room) => {
                     return (
