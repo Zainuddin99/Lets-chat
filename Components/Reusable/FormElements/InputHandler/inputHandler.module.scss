@@ -12,7 +12,6 @@
 
 .secondary {
     border: 0.2px solid rgb(184, 183, 183);
-    background-color: rgb(246, 246, 246);
     border-radius: 2px;
     padding: 7px 10px;
     font-size: 0.75rem;
@@ -26,7 +25,7 @@
 .error {
     & textarea,
     & input {
-        box-shadow: rgba(var(--danger-rgb), 0.3) 0px 0px 0px 0.8px;
+        box-shadow: var(--danger) 0px 0px 0px 0.55px;
     }
 
     & .message {

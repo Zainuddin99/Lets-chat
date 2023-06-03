@@ -28,7 +28,7 @@ function InputContainer() {
     };
 
     return (
-        <div className={combineClasses("shadow", classes.inputContainer)}>
+        <div className={combineClasses(classes.inputContainer)}>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"

@@ -28,7 +28,7 @@ function Modal({
             <div
                 className={combineClasses(
                     classes["modal-container"],
-                    "shadow-high",
+                    "shadow-high outlined-light",
                     className,
                     centered && "centered"
                 )}

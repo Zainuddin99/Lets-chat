@@ -8,16 +8,17 @@ import { useRouter } from "next/router";
 import { NextPage } from "next";
 import Head from "next/head";
 
-import { store } from "../Redux/store";
+import "../styles/globals.scss";
+import "../styles/customs.scss";
+import "../styles/themes.scss";
+
+import { dispatch, store } from "../Redux/store";
 import { firebaseAuth } from "../Firebase/auth";
 import PageLoader from "../Components/Reusable/PageLoader";
 import { userEntryRoutes } from "../Constants/main";
 import fetchSaveUserData from "../utils/fetchSaveUserData";
 import MainLayout from "../Components/Layout/MainLayout";
-
-import "../styles/globals.scss";
-import "../styles/customs.scss";
-import "../styles/themes.scss";
+import { userActions } from "../Redux/users";
 
 export type NextPageWithLayout = NextPage & {
     // eslint-disable-next-line
@@ -36,6 +37,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     // const { isPageLoading } = usePageLoader()
 
     useEffect(() => {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            dispatch(userActions.toggleMode({ mode: "dark" }));
+        }
         onAuthStateChanged(firebaseAuth, async (user) => {
             if (!user || !user.emailVerified) {
                 if (user && !user.emailVerified) {

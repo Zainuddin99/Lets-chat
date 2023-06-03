@@ -35,7 +35,7 @@ function Menu({ children, items, withClosableWrapper = true }: MenusProps) {
             )}
             <div onClick={handleDropdown}>{children}</div>
             {showDropdown && (
-                <div className={combineClasses(classes.menu, "shadow")}>
+                <div className={combineClasses(classes.menu, "shadow-high")}>
                     {items.map((item) => (
                         <div
                             className={combineClasses(classes.item)}

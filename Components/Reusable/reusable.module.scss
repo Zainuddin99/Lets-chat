@@ -4,9 +4,9 @@
 
 @keyframes skeleton-loading {
     0% {
-        background-color: hsl(200, 20%, 80%);
+        background-color: rgba(var(--inverse-bg-rgb), 0.05);
     }
     100% {
-        background-color: hsl(200, 20%, 95%);
+        background-color: rgba(var(--inverse-bg-rgb), 0.15);
     }
 }

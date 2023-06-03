@@ -21,7 +21,11 @@ function InputHandler({
             ) : (
                 <input {...rest} />
             )}
-            {message && <div className={classes["message"]}>{message}</div>}
+            {message && (
+                <div className={combineClasses(classes["message"], "bold")}>
+                    {message}
+                </div>
+            )}
         </div>
     );
 }

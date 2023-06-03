@@ -76,7 +76,7 @@ function AddRoomModal({ close }: { close: () => void }) {
         >
             <form onSubmit={handleSubmit}>
                 <InputHandler
-                    className="primary"
+                    className="primary transparent"
                     placeholder={`Name`}
                     autoComplete="off"
                     type="text"
@@ -88,7 +88,7 @@ function AddRoomModal({ close }: { close: () => void }) {
                 />
                 <InputHandler
                     element="textarea"
-                    className="primary"
+                    className="primary transparent"
                     placeholder={`Description`}
                     name="description"
                     error={extras["description"]?.isError}

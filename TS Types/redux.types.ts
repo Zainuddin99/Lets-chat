@@ -1,6 +1,10 @@
 import { Message } from "./chat.types";
 import { Rooms } from "./home.types";
 
+export type UserUtils = {
+    mode: "light" | "dark";
+};
+
 //For redux
 export type UserState = {
     email: string;
@@ -12,6 +16,7 @@ export type UserState = {
     id: string;
     updatedAt: string;
     createdAt: string;
+    utils: UserUtils;
 };
 
 export type RoomsState = {

@@ -12,32 +12,32 @@ $gold: #fda212;
 $danger: #fc0000;
 $white: #ffff;
 $white50: #fafafa;
+$white100: #ebebeb;
 $black: #000;
 $darkgrey: #4b4a4a;
-$skyblue: #090d21;
 $lightgrey: #d3d3d3;
+$skyblue: #090d21;
+$black800: #383b47;
+$black900: #1f2028;
+$slate200: #a9adc1;
+$slate800: #2e3039;
+$shadow-light-theme: rgba(0, 0, 0, 0.3);
+$shadow-dark-theme: rgba(255, 255, 255, 0.2);
 
 :root {
     // Theme colors
     --primary: #{$prime-green};
     --primary-rgb: #{hexToRGB($prime-green)};
-
     --secondary: #{$gold};
     --secondary-rgb: #{hexToRGB($gold)};
-
     --danger: #{$danger};
     --danger-rgb: #{hexToRGB($danger)};
-
-    // Others
-    --bg: #{$white50};
-    --primary-text: #{$black};
-    --secondary-text: #{$darkgrey};
     --white: #{$white};
     --lightgrey: #{$lightgrey};
-    --card-bg: #{$white};
 
-    --header-height: 12vh;
-    --subheader-height: 10vh;
+    // Common variables
+    --header-height: 4.5rem;
+    --subheader-height: 5rem;
 
     --border-radius-sm: 5px;
     --border-radius-md: 8px;
@@ -51,6 +51,37 @@ $lightgrey: #d3d3d3;
     --button-small: 9.5rem;
     --button-medium: 12.5rem;
     --button-large: 15.5rem;
+
+    // Light mode variables
+    --bg: #{$white50};
+    --bg-rgb: #{hexToRGB($white50)};
+    --inverse-bg: #{$black900};
+    --inverse-bg-rgb: #{hexToRGB($black900)};
+    --deep-bg: #{$white};
+    --card-bg: #{$white};
+    --shadow-color: #{$shadow-light-theme};
+
+    --primary-text: #{$black};
+    --secondary-text: #{$darkgrey};
+}
+
+:root[mode="dark"] {
+    --bg: #{$black900};
+    --bg-rgb: #{hexToRGB($black900)};
+    --inverse-bg: #{$white};
+    --inverse-bg-rgb: #{hexToRGB($white)};
+    --deep-bg: #{$black800};
+    --card-bg: #{$slate800};
+    --shadow-color: #{$shadow-dark-theme};
+
+    --primary-text: #{$white};
+    --secondary-text: #{$slate200};
+}
+
+body {
+    font-family: "Josefin Sans";
+    color: var(--primary-text);
+    background-color: var(--bg);
 }
 
 * {
@@ -62,13 +93,6 @@ $lightgrey: #d3d3d3;
     line-height: 120%;
 }
 
-html,
-body {
-    font-family: "Josefin Sans";
-    color: var(--primary-text);
-    background-color: var(--bg);
-}
-
 a {
     color: inherit;
     text-decoration: none;
@@ -77,6 +101,14 @@ a {
 header {
     height: var(--header-height);
     background-color: rgba(var(--primary-rgb), 0.04);
+
+    & .mode {
+        transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid rgba(var(--inverse-bg-rgb), 0.7);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+    }
 }
 
 .full {
@@ -97,10 +129,25 @@ header {
     }
 
     @include basics.media-query(s) {
-        padding: 4px;
+        padding: 0 10px;
     }
 }
 
 .relative {
     position: relative;
+}
+
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.transparent {
+    background-color: transparent;
 }

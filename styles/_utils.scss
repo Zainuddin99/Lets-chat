@@ -44,7 +44,11 @@
     }
 }
 
-@mixin custom-scrollbar($color: lightgrey, $width: 11px, $radius: 20px) {
+@mixin custom-scrollbar(
+    $color: rgba(var(--inverse-bg-rgb), 0.25),
+    $width: 11px,
+    $radius: 20px
+) {
     /* For scrollbar */
     scrollbar-width: thin;
     scrollbar-color: $color;

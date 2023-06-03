@@ -11,6 +11,9 @@ const initialState: UserState | null = {
     createdAt: "",
     updatedAt: "",
     id: "",
+    utils: {
+        mode: "light",
+    },
 };
 
 const userSlice = createSlice({
@@ -24,6 +27,14 @@ const userSlice = createSlice({
             state.photoURL = action.payload.photoURL;
             state.cloudinaryImagePublicId =
                 action.payload.cloudinaryImagePublicId;
+        },
+        toggleMode(state, action) {
+            const modeToApply =
+                action.payload.mode || state.utils.mode === "light"
+                    ? "dark"
+                    : "light";
+            document.documentElement.setAttribute("mode", modeToApply);
+            state.utils.mode = modeToApply;
         },
     },
 });

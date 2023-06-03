@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import SignupMessage from "./SignupMessage";
 import Link from "next/link";
 import LoginHeader from "./LoginHeader";
+import combineClasses from "../../../utils/combineClasses";
 
 const initialInputs = {
     password: "",
@@ -119,7 +120,7 @@ function SideContainer({ type }: LoginProps) {
         <div className={`${classes.sideContainer} ${classes[type]}`}>
             <LoginHeader type={type} />
 
-            <div className={classes.container}>
+            <div className={combineClasses(classes.container, "shadow-basic")}>
                 {showSignupMessage && <SignupMessage />}
 
                 <div className={classes.heading}>

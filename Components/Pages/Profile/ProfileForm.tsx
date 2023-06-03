@@ -97,7 +97,7 @@ function ProfileForm({ userData }: Props) {
             })}
 
             <div>
-                <div className={combineClasses("flex-fe-c")}>
+                <div className={combineClasses("flex-fe-c gap")}>
                     <button
                         className="outlined"
                         disabled={!inputsChanged}

@@ -14,7 +14,6 @@ function ProfileAvatarAndMenus() {
     return (
         <Menu items={profileMenuAvatarItems}>
             <Avatar
-                dimension="50px"
                 text={getNameConstants(firstName, lastName)}
                 imageUrl={photoURL}
             />
