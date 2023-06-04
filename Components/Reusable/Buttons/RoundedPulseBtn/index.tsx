@@ -1,5 +1,5 @@
 import combineClasses from "../../../../utils/combineClasses";
-import { ButtonProps } from "../types";
+import { StyledButtonProps } from "../types";
 import classes from "./roundedPulseBtn.module.scss";
 
 function RoundedPulseBtn({
@@ -8,7 +8,7 @@ function RoundedPulseBtn({
     className,
     style,
     children,
-}: ButtonProps) {
+}: StyledButtonProps) {
     return (
         <button
             onClick={onClick}

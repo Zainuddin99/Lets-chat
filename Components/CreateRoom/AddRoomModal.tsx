@@ -9,6 +9,7 @@ import { notify } from "../../utils/notify";
 import InputHandler from "../Reusable/FormElements/InputHandler";
 import Checkbox from "../Reusable/FormElements/Checkbox";
 import { InitialInputData } from "../../TS Types/utils.types";
+import Button from "../Reusable/Buttons/Button";
 
 const initialInputs: InitialInputData = {
     name: {
@@ -29,7 +30,7 @@ const initialInputs: InitialInputData = {
 function AddRoomModal({ close }: { close: () => void }) {
     let [inputs, handleInputsChange, setInputs, { extras, validate }] =
         useInputs(initialInputs);
-    const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     //To add extra functionality for existing handle change
     const handleInputsChangeCopy = handleInputsChange;
@@ -55,7 +56,7 @@ function AddRoomModal({ close }: { close: () => void }) {
         e.preventDefault();
         const isValidated = validate();
         if (!isValidated) return;
-        setDisableSubmit(true);
+        setLoading(true);
         try {
             await addRoom(inputs);
             notify("success", "Successfylly added room");
@@ -63,7 +64,7 @@ function AddRoomModal({ close }: { close: () => void }) {
         } catch (error: any) {
             handleError(error);
         }
-        setDisableSubmit(false);
+        setLoading(false);
     };
 
     return (
@@ -104,13 +105,14 @@ function AddRoomModal({ close }: { close: () => void }) {
                     label="Private Room"
                 />
                 <div className="flex-fe-c">
-                    <button
+                    <Button
                         type="submit"
-                        disabled={disableSubmit}
+                        loading={loading}
+                        loadingText="Creating"
                         className="secondary"
                     >
                         Create Room
-                    </button>
+                    </Button>
                 </div>
             </form>
         </Modal>

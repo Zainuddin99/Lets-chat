@@ -1,0 +1,15 @@
+@use "./styles-utils";
+
+.loader {
+    width: fit-content;
+    margin: auto;
+    font-weight: inherit;
+
+    &.noLoadingText::after {
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    @include styles-utils.spinner();
+}

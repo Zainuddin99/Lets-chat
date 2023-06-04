@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 import classes from "./profile.module.scss";
 import { useInputs } from "../../../customHooks/useInputs";
@@ -11,12 +11,15 @@ import { dispatch } from "../../../Redux/store";
 import { userActions } from "../../../Redux/users";
 import InputHandler from "../../Reusable/FormElements/InputHandler";
 import combineClasses from "../../../utils/combineClasses";
+import Button from "../../Reusable/Buttons/Button";
 
 type Props = {
     userData: UserState;
 };
 
 function ProfileForm({ userData }: Props) {
+    const [saving, setSaving] = useState(false);
+
     const initialInputsData = {
         nickName: {
             value: "",
@@ -66,6 +69,7 @@ function ProfileForm({ userData }: Props) {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
+        setSaving(true);
         try {
             await updateProfileData(inputs);
             dispatch(userActions.saveUser(inputs));
@@ -73,6 +77,7 @@ function ProfileForm({ userData }: Props) {
         } catch (error: any) {
             handleError(error);
         }
+        setSaving(false);
     };
 
     const inputsChanged = !isObjectsEqual(inputs, initialInputs as object);
@@ -106,12 +111,14 @@ function ProfileForm({ userData }: Props) {
                     >
                         Reset
                     </button>
-                    <button
+                    <Button
+                        loading={saving}
+                        loadingText="Saving"
                         disabled={!inputsChanged}
                         type="submit"
                     >
                         Save
-                    </button>
+                    </Button>
                 </div>
             </div>
         </form>

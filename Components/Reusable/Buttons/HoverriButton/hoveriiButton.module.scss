@@ -1,3 +1,5 @@
+@use "../styles-utils";
+
 @mixin generateColors($color) {
     &::before {
         background: rgba($color, 0.5);
@@ -67,5 +69,22 @@
     }
     &:active {
         transform: scale(0.96);
+    }
+
+    &.loading {
+        @include styles-utils.spinner();
+        &::after {
+            left: 12px;
+        }
+        & .content {
+            padding-left: 2rem;
+            transition: 0.3s ease;
+        }
+        & .icon {
+            display: none;
+        }
+        &:before {
+            width: 100%;
+        }
     }
 }

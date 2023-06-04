@@ -1,37 +1,48 @@
 import combineClasses from "../../../../utils/combineClasses";
-import { ButtonProps } from "../types";
+import Button from "../Button";
+import { StyledButtonProps } from "../types";
 import classes from "./hoveriiButton.module.scss";
 
 function HoveriiButton({
     content,
     icon,
+    loading,
+    loadingText,
     children,
     className,
-    type = "primary",
+    btnType = "primary",
+    disabled,
     ...props
-}: ButtonProps) {
+}: StyledButtonProps) {
     return (
-        <button
+        <Button
             className={combineClasses(
                 classes["cta"],
                 "basic",
                 className,
-                classes[`btn-${type}`]
+                classes[`btn-${btnType}`],
+                loading && classes.loading
             )}
+            disabled={disabled || loading}
             {...props}
         >
-            <span className="bold"> {children || content || "Click me"}</span>
-            {icon || (
-                <svg
-                    width="13px"
-                    height="10px"
-                    viewBox="0 0 13 10"
-                >
-                    <path d="M1,5 L11,5"></path>
-                    <polyline points="8 1 12 5 8 9"></polyline>
-                </svg>
-            )}
-        </button>
+            <span className={combineClasses(classes.content, "bold")}>
+                {" "}
+                {(loading && loadingText) || children || content || "Click me"}
+            </span>
+            <span className={classes.icon}>
+                {icon || (
+                    <svg
+                        width="13px"
+                        height="10px"
+                        viewBox="0 0 13 10"
+                    >
+                        <path d="M1,5 L11,5"></path>
+                        <polyline points="8 1 12 5 8 9"></polyline>
+                    </svg>
+                )}
+            </span>
+        </Button>
     );
 }
 export default HoveriiButton;

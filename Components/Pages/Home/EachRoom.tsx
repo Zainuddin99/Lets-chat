@@ -118,7 +118,14 @@ function EachRoom({ item }: { item: Room }) {
 
             <div className={combineClasses(classes.footer, "flexcol-fs-fs")}>
                 <HoveriiButton
-                    disabled={requesting}
+                    loading={requesting}
+                    loadingText={
+                        privateRoom
+                            ? alreadyRequested
+                                ? "Cancelling"
+                                : "Requesting"
+                            : "Joining"
+                    }
                     onClick={() =>
                         joined
                             ? goToMessage()
@@ -128,7 +135,7 @@ function EachRoom({ item }: { item: Room }) {
                                 : requestJoinHandler("join-request")
                             : requestJoinHandler("join")
                     }
-                    type={
+                    btnType={
                         joined
                             ? "primary"
                             : privateRoom

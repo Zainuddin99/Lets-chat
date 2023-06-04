@@ -14,6 +14,7 @@ import SignupMessage from "./SignupMessage";
 import Link from "next/link";
 import LoginHeader from "./LoginHeader";
 import combineClasses from "../../../utils/combineClasses";
+import Button from "../../Reusable/Buttons/Button";
 
 const initialInputs = {
     password: "",
@@ -26,6 +27,7 @@ const initialInputs = {
 function SideContainer({ type }: LoginProps) {
     const [inputs, handleInputsChange, setInputs] = useInputs(initialInputs);
     const [disabledSubmit, setDisabledSubmit] = useState<boolean>(true);
+    const [submitting, setSubmitting] = useState(false);
     const [showSignupMessage, setShowSignupMessage] = useState<boolean>(false);
     const [errors, setErrors] = useState(initialInputs);
 
@@ -45,7 +47,7 @@ function SideContainer({ type }: LoginProps) {
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         const { email, password, firstName, lastName }: Inputs = inputs;
-        setDisabledSubmit(true);
+        setSubmitting(true);
         try {
             if (type === "signup") {
                 await createUser(email, password, firstName, lastName);
@@ -68,7 +70,7 @@ function SideContainer({ type }: LoginProps) {
                 error.code || error.message || "Something went wrong!"
             );
         }
-        setDisabledSubmit(false);
+        setSubmitting(false);
     };
 
     useEffect(() => {
@@ -206,12 +208,13 @@ function SideContainer({ type }: LoginProps) {
                         </>
                     )}
 
-                    <button
+                    <Button
                         className="primary full"
                         disabled={disabledSubmit}
+                        loading={submitting}
                     >
                         Submit
-                    </button>
+                    </Button>
 
                     {type === "login" && (
                         <div className={classes.forgotPasswordLink}>
