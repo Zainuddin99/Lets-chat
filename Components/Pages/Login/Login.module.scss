@@ -153,12 +153,12 @@
 
 .signupMessage {
     text-align: center;
-    font-size: 0.7rem;
-    color: rgb(5, 101, 5);
-    font-weight: 500;
+    font-size: 0.8rem;
+    color: var(--success);
+    font-weight: 600;
     padding: 15px 7px;
     margin-bottom: 20px;
-    border: 1px solid var(--primary);
+    border: 1px solid rgba(var(--success-rgb), 0.5);
 }
 
 .validationError {

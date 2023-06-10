@@ -15,7 +15,8 @@ const getInitialData = (
         const extrasData: InputExtras = {};
         for (const name in inputs) {
             const nameData = (inputs as any)[name];
-            initialInputs[name] = nameData.value;
+            initialInputs[name] =
+                typeof nameData === "object" ? nameData.value : nameData;
             extrasData[name] = {
                 isError: false,
                 message: nameData.message,

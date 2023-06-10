@@ -19,56 +19,44 @@ export const createUser = async (
     firstName: string,
     lastName: string
 ) => {
-    try {
-        //Add to auth
-        const createdUser = await createUserWithEmailAndPassword(
-            firebaseAuth,
-            email,
-            password
-        );
-        //Add to separate collection main details to fetch user data
-        //Add same id from auth to it using set doc else it will create new doc with own id in addDoc
-        await setDoc(userDocRef(createdUser.user.uid), {
-            email,
-            firstName,
-            lastName,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-        });
-        // @ts-ignore
-        await sendEmailVerification(firebaseAuth.currentUser, {
-            url: firebaseAuthRedirectUrl,
-        });
-        return createdUser;
-    } catch (error) {
-        Promise.reject(error);
-    }
+    //Add to auth
+    const createdUser = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+    );
+    //Add to separate collection main details to fetch user data
+    //Add same id from auth to it using set doc else it will create new doc with own id in addDoc
+    await setDoc(userDocRef(createdUser.user.uid), {
+        email,
+        firstName,
+        lastName,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+    });
+    // @ts-ignore
+    await sendEmailVerification(firebaseAuth.currentUser, {
+        url: firebaseAuthRedirectUrl,
+    });
+    return createdUser;
 };
 
 export const signInUser = async (email: string, password: string) => {
-    try {
-        const user = await signInWithEmailAndPassword(
-            firebaseAuth,
-            email,
-            password
-        );
-        if (!user.user.emailVerified) {
-            throw new Error("This account needs to verify email first!");
-        }
-        return user;
-    } catch (error) {
-        Promise.reject(error);
+    const user = await signInWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+    );
+    if (!user.user.emailVerified) {
+        throw new Error("This account needs to verify email first!");
     }
+    return user;
 };
 
 export const sendPasswordRestLink = async (email: string) => {
-    try {
-        await sendPasswordResetEmail(firebaseAuth, email, {
-            url: firebaseAuthRedirectUrl,
-        });
-    } catch (error) {
-        Promise.reject(error);
-    }
+    await sendPasswordResetEmail(firebaseAuth, email, {
+        url: firebaseAuthRedirectUrl,
+    });
 };
 
 export const signoutUser = () => {

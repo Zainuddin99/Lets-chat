@@ -32,6 +32,8 @@ $shadow-dark-theme: rgba(255, 255, 255, 0.2);
     --secondary-rgb: #{hexToRGB($gold)};
     --danger: #{$danger};
     --danger-rgb: #{hexToRGB($danger)};
+    --success: #{$prime-green};
+    --success-rgb: #{hexToRGB($prime-green)};
     --white: #{$white};
     --lightgrey: #{$lightgrey};
 

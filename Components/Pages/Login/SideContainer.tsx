@@ -1,6 +1,9 @@
-import classes from "./Login.module.scss";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { isObjectsEqual, validateEmail } from "../../../utils/functions";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+import classes from "./Login.module.scss";
+import { validateEmail } from "../../../utils/functions";
 import {
     createUser,
     sendPasswordRestLink,
@@ -9,12 +12,10 @@ import {
 import { notify } from "../../../utils/notify";
 import { Inputs, LoginProps } from "../../../TS Types/login.types";
 import { useInputs } from "../../../customHooks/useInputs";
-import { useRouter } from "next/router";
-import SignupMessage from "./SignupMessage";
-import Link from "next/link";
 import LoginHeader from "./LoginHeader";
 import combineClasses from "../../../utils/combineClasses";
 import Button from "../../Reusable/Buttons/Button";
+import { loginSuccessMessages } from "../../../Constants/main";
 
 const initialInputs = {
     password: "",
@@ -26,23 +27,18 @@ const initialInputs = {
 
 function SideContainer({ type }: LoginProps) {
     const [inputs, handleInputsChange, setInputs] = useInputs(initialInputs);
+
     const [disabledSubmit, setDisabledSubmit] = useState<boolean>(true);
     const [submitting, setSubmitting] = useState(false);
-    const [showSignupMessage, setShowSignupMessage] = useState<boolean>(false);
+    const [successMessage, setSuccessMessage] = useState<string>("");
+
     const [errors, setErrors] = useState(initialInputs);
 
     const router = useRouter();
 
-    //To add default inputs when inputs have changed
-    const defaultInputs = () => {
-        if (!isObjectsEqual(initialInputs, inputs)) {
-            setInputs(initialInputs);
-        }
-    };
-
     useEffect(() => {
-        defaultInputs();
-    }, [type]);
+        setInputs(initialInputs);
+    }, [type, setInputs]);
 
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
@@ -51,18 +47,18 @@ function SideContainer({ type }: LoginProps) {
         try {
             if (type === "signup") {
                 await createUser(email, password, firstName, lastName);
+                setSuccessMessage(loginSuccessMessages.signUp);
                 notify("success", "Successfully signed up");
-                setShowSignupMessage(true);
-                defaultInputs();
+                setInputs(initialInputs);
             } else if (type === "login") {
                 await signInUser(email, password);
                 notify("success", "Successfully logged in");
-                defaultInputs();
                 router.push("/");
             } else if (type === "forgotPassword") {
                 await sendPasswordRestLink(email);
+                setSuccessMessage(loginSuccessMessages.forgotPassword);
                 notify("success", "Successfully sent email");
-                router.push("/login");
+                setInputs(initialInputs);
             }
         } catch (error: any) {
             notify(
@@ -99,16 +95,16 @@ function SideContainer({ type }: LoginProps) {
         validateForm();
     }, [inputs, type]);
 
+    const { email, confirmPassword, password } = inputs;
+
     useEffect(() => {
-        const { email } = inputs;
         setErrors((prev) => ({
             ...prev,
             email: email && !validateEmail(email) ? "Enter valid email!" : "",
         }));
-    }, [inputs.email]);
+    }, [email]);
 
     useEffect(() => {
-        const { confirmPassword, password } = inputs;
         setErrors((prev) => ({
             ...prev,
             confirmPassword:
@@ -116,14 +112,18 @@ function SideContainer({ type }: LoginProps) {
                     ? "Password must be same"
                     : "",
         }));
-    }, [inputs.confirmPassword, inputs.password]);
+    }, [confirmPassword, password]);
 
     return (
         <div className={`${classes.sideContainer} ${classes[type]}`}>
             <LoginHeader type={type} />
 
             <div className={combineClasses(classes.container, "shadow-basic")}>
-                {showSignupMessage && <SignupMessage />}
+                {successMessage && (
+                    <div className={classes.signupMessage}>
+                        {successMessage} (Kindly check spam also)
+                    </div>
+                )}
 
                 <div className={classes.heading}>
                     {type === "login"
