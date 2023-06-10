@@ -1,4 +1,5 @@
 import {
+    User,
     createUserWithEmailAndPassword,
     getAuth,
     sendEmailVerification,
@@ -7,7 +8,6 @@ import {
     signOut,
 } from "firebase/auth";
 import { serverTimestamp, setDoc } from "firebase/firestore";
-import { firebaseAuthRedirectUrl } from "./constants";
 import { userDocRef } from "./Database/setup";
 import { firebaseApp } from "./setup";
 
@@ -34,9 +34,8 @@ export const createUser = async (
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
     });
-    // @ts-ignore
-    await sendEmailVerification(firebaseAuth.currentUser, {
-        url: firebaseAuthRedirectUrl,
+    await sendEmailVerification(firebaseAuth.currentUser as User, {
+        url: process.env.FIREBASE_AUTH_REDIRECT_URL as string,
     });
     return createdUser;
 };
@@ -55,7 +54,7 @@ export const signInUser = async (email: string, password: string) => {
 
 export const sendPasswordRestLink = async (email: string) => {
     await sendPasswordResetEmail(firebaseAuth, email, {
-        url: firebaseAuthRedirectUrl,
+        url: process.env.FIREBASE_AUTH_REDIRECT_URL as string,
     });
 };
 
