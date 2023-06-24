@@ -7,20 +7,22 @@
 }
 
 // Colors
-$prime-green: #1bb67d;
-$gold: #fda212;
-$danger: #fc0000;
 $white: #ffff;
 $white50: #fafafa;
 $white100: #ebebeb;
 $black: #000;
+$black980: #0f0f0f;
+$black920: #212121;
+$black900: #2d2d2d;
 $darkgrey: #4b4a4a;
 $lightgrey: #d3d3d3;
-$skyblue: #090d21;
-$black800: #383b47;
-$black900: #1f2028;
+$slate950: #17171e;
+$slate800: #26272f;
+$slate750: #31343e;
 $slate200: #a9adc1;
-$slate800: #2e3039;
+$prime-green: #1bb67d;
+$gold: #fda212;
+$danger: #fc0000;
 $shadow-light-theme: rgba(0, 0, 0, 0.3);
 $shadow-dark-theme: rgba(255, 255, 255, 0.2);
 
@@ -36,6 +38,18 @@ $shadow-dark-theme: rgba(255, 255, 255, 0.2);
     --success-rgb: #{hexToRGB($prime-green)};
     --white: #{$white};
     --lightgrey: #{$lightgrey};
+
+    // Light mode variables
+    --bg: #{$white50};
+    --bg-rgb: #{hexToRGB($white50)};
+    --deep-bg: #{$white};
+    --card-bg: #{$white};
+
+    --inverse-bg: #{$slate950};
+    --inverse-bg-rgb: #{hexToRGB($slate950)};
+    --primary-text: #{$black};
+    --secondary-text: #{$darkgrey};
+    --shadow-color: #{$shadow-light-theme};
 
     // Common variables
     --header-height: 4.5rem;
@@ -53,31 +67,26 @@ $shadow-dark-theme: rgba(255, 255, 255, 0.2);
     --button-small: 9.5rem;
     --button-medium: 12.5rem;
     --button-large: 15.5rem;
-
-    // Light mode variables
-    --bg: #{$white50};
-    --bg-rgb: #{hexToRGB($white50)};
-    --inverse-bg: #{$black900};
-    --inverse-bg-rgb: #{hexToRGB($black900)};
-    --deep-bg: #{$white};
-    --card-bg: #{$white};
-    --shadow-color: #{$shadow-light-theme};
-
-    --primary-text: #{$black};
-    --secondary-text: #{$darkgrey};
 }
 
 :root[mode="dark"] {
-    --bg: #{$black900};
-    --bg-rgb: #{hexToRGB($black900)};
+    --bg: #{$slate950};
+    --bg-rgb: #{hexToRGB($slate950)};
+    --deep-bg: #{$slate750};
+    --card-bg: #{$slate800};
+
     --inverse-bg: #{$white};
     --inverse-bg-rgb: #{hexToRGB($white)};
-    --deep-bg: #{$black800};
-    --card-bg: #{$slate800};
-    --shadow-color: #{$shadow-dark-theme};
-
     --primary-text: #{$white};
     --secondary-text: #{$slate200};
+    --shadow-color: #{$shadow-dark-theme};
+}
+
+:root[mode="dark"][mode-variant="extra-black"] {
+    --bg: #{$black980};
+    --bg-rgb: #{hexToRGB($black980)};
+    --deep-bg: #{$black900};
+    --card-bg: #{$black920};
 }
 
 body {
@@ -104,6 +113,10 @@ header {
     height: var(--header-height);
     background-color: rgba(var(--primary-rgb), 0.04);
 
+    & > div {
+        height: 100%;
+    }
+
     & .mode {
         transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
         border: 2px solid rgba(var(--inverse-bg-rgb), 0.7);
@@ -111,13 +124,6 @@ header {
         width: 40px;
         height: 40px;
     }
-}
-
-.full {
-    height: 100%;
-    width: 100%;
-    max-width: 100%;
-    max-height: 100%;
 }
 
 .fluid {
@@ -133,23 +139,4 @@ header {
     @include basics.media-query(s) {
         padding: 0 10px;
     }
-}
-
-.relative {
-    position: relative;
-}
-
-.absolute-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-.transparent {
-    background-color: transparent;
 }

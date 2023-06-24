@@ -113,3 +113,34 @@ textarea.secondary {
         border: 1px solid rgba(var(--inverse-bg-rgb), 0.6);
     }
 }
+
+.round,
+.round-sm {
+    border-radius: var(--border-radius-sm);
+}
+.round-md {
+    border-radius: var(--border-radius-md);
+}
+.round-lg {
+    border-radius: var(--border-radius-lg);
+}
+
+.shadow {
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+.shadow-light {
+    box-shadow: 0 0.5px 2px var(--shadow-color);
+}
+.shadow-basic {
+    box-shadow: 0 3px 6px var(--shadow-color);
+}
+.shadow-high {
+    box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.1);
+}
+
+.outlined {
+    outline: 1px solid rgba(var(--inverse-bg-rgb), 0.3);
+}
+.outlined-light {
+    outline: 1px solid rgba(var(--inverse-bg-rgb), 0.1);
+}

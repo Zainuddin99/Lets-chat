@@ -66,40 +66,8 @@
 .wrap {
     flex-wrap: wrap;
 }
-
 .gap {
     gap: 1rem;
-}
-
-// Keyframe animations
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-@keyframes pop-down {
-    from {
-        top: 10%;
-    }
-
-    to {
-        top: 50%;
-    }
-}
-@keyframes fade-down {
-    from {
-        top: 45%;
-        opacity: 0;
-    }
-
-    to {
-        top: 50%;
-        opacity: 1;
-    }
 }
 
 .icon-wrapper {
@@ -116,40 +84,34 @@
     }
 }
 
-.round,
-.round-sm {
-    border-radius: var(--border-radius-sm);
-}
-.round-md {
-    border-radius: var(--border-radius-md);
-}
-.round-lg {
-    border-radius: var(--border-radius-lg);
-}
-
-.shadow {
-    box-shadow: 0 10px 20px var(--shadow-color);
-}
-.shadow-light {
-    box-shadow: 0 0.5px 2px var(--shadow-color);
-}
-.shadow-basic {
-    box-shadow: 0 3px 6px var(--shadow-color);
-}
-.shadow-high {
-    box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0px 3px 14px 2px rgba(0, 0, 0, 0.12),
-        0px 5px 5px -3px rgba(0, 0, 0, 0.2);
-}
 .paper {
     box-shadow: rgba(var(--inverse-bg-rgb), 0.2) 0px 2px 1px -1px,
         rgba(var(--inverse-bg-rgb), 0.14) 0px 1px 1px 0px,
         rgba(var(--inverse-bg-rgb), 0.12) 0px 1px 3px 0px;
 }
 
-.outlined {
-    outline: 1px solid rgba(var(--inverse-bg-rgb), 0.3);
+.relative {
+    position: relative;
 }
-.outlined-light {
-    outline: 1px solid rgba(var(--inverse-bg-rgb), 0.1);
+
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.transparent {
+    background-color: transparent;
+}
+
+.full {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }

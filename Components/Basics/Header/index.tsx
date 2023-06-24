@@ -9,11 +9,11 @@ import { userActions } from "../../../Redux/users";
 function Header() {
     const userUtils = useSelector((state: RootState) => state.users.utils);
     const ModeIcon =
-        userUtils.mode === "light" ? MdOutlineNightlight : MdOutlineLightMode;
+        userUtils.mode === "light" ? MdOutlineLightMode : MdOutlineNightlight;
 
     return (
         <header className="shadow-light">
-            <div className="flex-sb-c fluid full">
+            <div className="flex-sb-c fluid">
                 <h1 className="semibold">Lets chat</h1>
                 <div className={combineClasses("flex-sb-c gap")}>
                     <button
