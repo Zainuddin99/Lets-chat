@@ -19,6 +19,7 @@ import { userEntryRoutes } from "../Constants/main";
 import fetchSaveUserData from "../utils/fetchSaveUserData";
 import MainLayout from "../Components/Layout/MainLayout";
 import { userActions } from "../Redux/users";
+import EntryLayout from "../Components/Layout/EntryLayout";
 
 export type NextPageWithLayout = NextPage & {
     // eslint-disable-next-line
@@ -62,7 +63,20 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         return <PageLoader />;
     }
 
-    const getLayout = Component.getLayout;
+    const getLayoutComponent = () => {
+        // If already layout present then render it else render deafult ones
+        if (Component.getLayout) {
+            return Component.getLayout(<Component {...pageProps} />);
+        }
+        const Layout = userEntryRoutes.includes(router.pathname)
+            ? EntryLayout
+            : MainLayout;
+        return (
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        );
+    };
 
     return (
         <Provider store={store}>
@@ -79,14 +93,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             </Head>
 
             <ReactNotifications />
-            {/* If already layout present then render it else render deafult one */}
-            {getLayout ? (
-                getLayout(<Component {...pageProps} />)
-            ) : (
-                <MainLayout>
-                    <Component {...pageProps} />
-                </MainLayout>
-            )}
+            {getLayoutComponent()}
         </Provider>
     );
 }
